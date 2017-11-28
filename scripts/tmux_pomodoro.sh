@@ -48,6 +48,8 @@ pomodoro_start() {
 
   set_tmux_option "@pomodoro_state" "active"
   set_tmux_option "@pomodoro_end_at" "$end_time"
+
+  tmux refresh-client -S
 }
 
 pomodoro_stop() {
@@ -55,6 +57,8 @@ pomodoro_stop() {
   tmux clock-mode -t 1
   set_tmux_option "@pomodoro_state" "inactive"
   set_tmux_option "@pomodoro_end_at" ""
+
+  tmux refresh-client -S
 }
 
 pomodoro_status() {
