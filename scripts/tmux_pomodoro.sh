@@ -54,7 +54,6 @@ pomodoro_start() {
 
 pomodoro_stop() {
   tmux display-message "POMODORO stopped"
-  tmux clock-mode -t 1
   set_tmux_option "@pomodoro_state" "inactive"
   set_tmux_option "@pomodoro_end_at" ""
 
