@@ -9,9 +9,9 @@ _get_current_time_stamp() {
 }
 
 _display_progress() {
-  local filled_glyph=''
-  local empty_glyph=''
-  local active_glyph=''
+  local filled_glyph='■'
+  local empty_glyph='□'
+  local active_glyph='◧'
 
   local end_time="$(get_tmux_option "@pomodoro_end_at")"
   local current_time="$(_get_current_time_stamp)"
@@ -35,7 +35,7 @@ _display_progress() {
 
     filled_segments=`printf "%${filled_segments}s"`
     empty_segments=`printf "%${empty_segments}s"`
-    echo "${filled_segments// /$filled_glyph}$active_segments${empty_segments// /$empty_glyph} $time_remaining" |
+    echo "${filled_segments// /$filled_glyph}$active_segments${empty_segments// /$empty_glyph}" |
       sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
   fi
 }
