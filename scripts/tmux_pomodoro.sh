@@ -41,7 +41,7 @@ _display_progress() {
 }
 
 pomodoro_start() {
-  tmux display-message "⏰ POMODORO started"
+  tmux display-message "POMODORO started"
   local current_time=$(_get_current_time_stamp)
   local pomodoro_duration="$((25*60))" # duration is 25 minutes by default
   local end_time="$(( $current_time + $pomodoro_duration ))"
@@ -53,7 +53,7 @@ pomodoro_start() {
 }
 
 pomodoro_stop() {
-  tmux display-message "☕ POMODORO stopped"
+  tmux display-message "POMODORO stopped"
   tmux clock-mode -t 1
   set_tmux_option "@pomodoro_state" "inactive"
   set_tmux_option "@pomodoro_end_at" ""
