@@ -9,9 +9,9 @@ _get_current_time_stamp() {
 }
 
 _display_progress() {
-  local filled_glyph='■'
-  local empty_glyph='□'
-  local active_glyph='◧'
+  local filled_glyph='#[fg=blue]█#[fg=default]'
+  local empty_glyph='#[fg=blue]░#[fg=default]'
+  local active_glyph='#[fg=blue]▒#[fg=default]'
 
   local end_time="$(get_tmux_option "@pomodoro_end_at")"
   local current_time="$(_get_current_time_stamp)"
