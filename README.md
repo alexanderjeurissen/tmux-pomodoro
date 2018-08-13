@@ -12,5 +12,6 @@ The short gest is that by adding `#{pomodoro_status}` to your tmux status line, 
 ## Screenshots
 
 ![image](https://raw.githubusercontent.com/alexanderjeurissen/tmux-pomodoro/master/screenshots/pomodoro_full.png)
+
 ![image](https://raw.githubusercontent.com/alexanderjeurissen/tmux-pomodoro/master/screenshots/pomodoro_with_empty_segment.png)
 ![image](https://raw.githubusercontent.com/alexanderjeurissen/tmux-pomodoro/master/screenshots/pomodoro_more_empty.png)
