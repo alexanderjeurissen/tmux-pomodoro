@@ -9,14 +9,23 @@ _get_current_time_stamp() {
 }
 
 _display_progress() {
-  local filled_glyph='#[fg=black]█#[fg=default]'
-  local empty_glyph='#[fg=black]▒#[fg=default]'
-  local active_glyph='#[fg=black]█#[fg=default]'
+
+  local h_pomodoro_fg_color=`pomodoro_fg_color`
+  local h_pomodoro_bg_color=`pomodoro_bg_color`
+  local h_pomodoro_filled_glyph=`pomodoro_filled_glyph`
+  local h_pomodoro_empty_glyph=`pomodoro_empty_glyph`
+  local h_pomodoro_active_glyph=`pomodoro_active_glyph`
+
+  local filled_glyph="#[fg=${h_pomodoro_fg_color:='green'}]#[bg=${h_pomodoro_bg_color:='blue'}]${h_pomodoro_filled_glyph:=█}#[fg=default]#[bg=default]"
+  local empty_glyph="#[fg=${h_pomodoro_fg_color:='green'}]#[bg=${h_pomodoro_bg_color:='blue'}]${h_pomodoro_empty_glyph:= }#[fg=default]#[bg=default]"
+  local active_glyph="#[fg=${h_pomodoro_fg_color:='green'}]#[bg=${h_pomodoro_bg_color:='blue'}]${h_pomodoro_active_glyph:=█}#[fg=default]#[bg=default]"
 
   local end_time="$(get_tmux_option "@pomodoro_end_at")"
   local current_time="$(_get_current_time_stamp)"
   local time_difference=$(( $end_time - $current_time ))
   local time_remaining="$(( $time_difference / 60))" # time remaining in minutes
+
+  set_tmux_option "@pomodoro_time_remaining" "$time_remaining"
 
   local divider=5
 
@@ -43,7 +52,8 @@ _display_progress() {
 pomodoro_start() {
   tmux display-message "POMODORO started"
   local current_time=$(_get_current_time_stamp)
-  local pomodoro_duration="$((25*60))" # duration is 25 minutes by default
+  local h_pomodoro_duration=`pomodoro_duration_helper`
+  local pomodoro_duration="$(( ${h_pomodoro_duration:=25} * 60 ))"
   local end_time="$(( $current_time + $pomodoro_duration ))"
 
   set_tmux_option "@pomodoro_state" "active"
@@ -53,9 +63,19 @@ pomodoro_start() {
 }
 
 pomodoro_stop() {
+  local h_pomodoro_show_clock=`pomodoro_show_clock_helper`
+  local pomodoro_show_clock="${h_pomodoro_show_clock:=0}"
+  local time_remaining="$(get_tmux_option "@pomodoro_time_remaining")"
+
   tmux display-message "POMODORO stopped"
   set_tmux_option "@pomodoro_state" "inactive"
   set_tmux_option "@pomodoro_end_at" ""
+
+  if (($time_remaining == 0)); then
+    if [[ $pomodoro_show_clock = 'on_stop' ]]; then
+      tmux clock
+    fi
+  fi
 
   tmux refresh-client -S
 }
