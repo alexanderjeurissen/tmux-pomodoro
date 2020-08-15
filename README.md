@@ -7,7 +7,7 @@ Tmux plugin that enables starting and displaying a pomodoro in your tmux status 
 Introduces a new #{pomodoro_status} format.
 
 
-![image](https://raw.githubusercontent.com/alexanderjeurissen/tmux-pomodoro/master/screenshots/screenshot.png)
+![image](https://raw.githubusercontent.com/alexanderjeurissen/tmux-pomodoro/main/screenshots/screenshot.png)
 
 ### Usage
 
